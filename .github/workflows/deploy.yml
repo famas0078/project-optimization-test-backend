@@ -1,0 +1,38 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main  # Выполнять деплой при пуше в ветку main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout проекта
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Настройка SSH
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      # Деплой на удалённый сервер
+      - name: Deploy to server
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
+            # Перейти в директорию проекта на сервере
+            cd /webproject/sppr-machines-life/
+            # Обновить репозиторий
+            sudo git pull origin main
+            # Установить зависимости и перезапустить бэкенд
+            sudo npm install
+            sudo npm run build
+            sudo pm2 restart 2
+            sudo systemctl restart nginx
+
+            echo "Deployment complete"
+          EOF
