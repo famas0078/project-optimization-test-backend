@@ -10,7 +10,6 @@ import { CtfModule } from './modules/ctf/ctf.module';
 import { DataLoaderModule } from './modules/data-loader/data-loader.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { MailModule } from './modules/mail/mail.module';
-import { TepModule } from './modules/tep/tep.module';
 
 @Module({
   imports: [
@@ -25,7 +24,6 @@ import { TepModule } from './modules/tep/tep.module';
     ActivesModule,
     DataModule,
     CtfModule,
-    TepModule,
   ],
   controllers: [AppController],
   providers: [AppService],
