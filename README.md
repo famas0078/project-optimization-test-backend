@@ -58,6 +58,15 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Working with JWT token
+
+```bash
+# creating a private key
+$ ssh-keygen -f ./config/keys/jwtKey.pem -t rsa -m pem -N ""
+
+# converts the public key to the desired format
+$ ssh-keygen -f ./config/keys/jwtKey.pem.pub -e -m pem > ./config/keys/jwtKey.pub.pem
+```
 ## Resources
 
 Check out a few resources that may come in handy when working with NestJS:
